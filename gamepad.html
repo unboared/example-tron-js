@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <!-- Metadata -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <!-- Game Title -->
+        <title>Tron Gamepad</title>
+
+        <!-- Import external stylesheets -->
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css?family=Bungee&display=swap" rel="stylesheet">
+
+        <style type=text/css>
+                @media screen and (orientation:landscape) {
+                        #portrait {
+                                display: none;
+                        }
+                }
+                
+                @media screen and (orientation:portrait) {
+                        #landscape {
+                                display: none;
+                        }
+                }
+        </style>
+
+        <!-- Import Unboared UMD library (Javascript) -->
+        <script src="https://developers.unboared.com/unboared-lib/umd/v0.3.1/unboared-lib.js"></script>
+
+        <script type="text/javascript">
+                class TronGamepad {
+                        constructor() {
+                                let that = this
+                                that.unboared = new Unboared.Game();
+                                that.unboared.init();
+
+                                that.unboared.onReady(() => {
+                                        let elems = document.getElementsByClassName("button")
+                                        for (let i = 0; i < elems.length; i++) {
+                                                elems[i].style.color = that.unboared.getColor()
+                                        }
+                                })
+
+                                that.unboared.start();
+
+                                if (!("ontouchstart" in document.createElement("div"))) {
+                                        var elements = document.getElementsByTagName("*");
+                                        for (var i = 0; i < elements.length; ++i) {
+                                                var element = elements[i];
+                                                var ontouchstart = element.getAttribute("ontouchstart");
+                                                if (ontouchstart) {
+                                                        element.setAttribute("onmousedown", ontouchstart);
+                                                }
+                                                var ontouchend = element.getAttribute("ontouchend");
+                                                if (ontouchend) {
+                                                        element.setAttribute("onmouseup", ontouchend);
+                                                }
+                                        }
+                                }
+                        }
+
+                        sendMessageToScreen(msg, data) {
+                                this.unboared.emitAction(msg, data);
+                        }
+                }
+        </script>
+
+</head>
+
+<body onload="window.app = new TronGamepad()">
+        <div id="portrait">
+                Change the orientation to play
+        </div>
+
+        <div id="landscape">
+                <div id="upButton" class="button" ontouchstart="window.app.sendMessageToScreen('UP')">
+                        UP
+                </div>
+                <div id="downButton" class="button" ontouchstart="window.app.sendMessageToScreen('DOWN')">
+                        DOWN
+                </div>
+                <div id="leftButton" class="button" ontouchstart="window.app.sendMessageToScreen('LEFT')">
+                        LEFT
+                </div>
+                <div id="rightButton" class="button" ontouchstart="window.app.sendMessageToScreen('RIGHT')">
+                        RIGHT
+                </div>
+
+                <div id="centerButton" class="button" ontouchstart="window.app.sendMessageToScreen('START')">
+                        START
+                </div>
+        </div>
+</body>
+
+</html>

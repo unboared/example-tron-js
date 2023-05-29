@@ -10,9 +10,6 @@ class Player {
                 this.startX = x;
                 this.startY = y;
                 this.startDirection = direction;
-
-                this.constructor.counter = (this.constructor.counter || 0) + 1;
-                this._id = this.constructor.counter;
         }
 }
 
@@ -91,7 +88,7 @@ class Tron {
 
         messageHandler(message, from, data) {
                 let activePlayer = this.unboared.getActivePlayerIndex(from)
-                if (activePlayer < this.getNumPlayers()) {
+                if (activePlayer < this.players.length) {
                         let player = this.players[activePlayer]
                         switch (message) {
                                 case "UP":
@@ -117,13 +114,7 @@ class Tron {
                                         break;
                         }
                 }
-
         }
-
-        getNumPlayers() {
-                return this.players.length
-        }
-
 
         resetGame() {
                 if (this.game === null) {
@@ -163,8 +154,8 @@ class Tron {
 
 
         draw() {
-                if (this.getNumPlayers() < Tron.MIN_NUM_PLAYER) {
-                        this.outcome = this.getNumPlayers() === 1 ?
+                if (this.players.length < Tron.MIN_NUM_PLAYER) {
+                        this.outcome = this.players.length === 1 ?
                                 "Requires one additional player!" :
                                 "Requires two additional players!";
                 } else {

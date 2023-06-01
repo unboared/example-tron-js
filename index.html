@@ -18,10 +18,14 @@
         <script src="https://developers.unboared.com/unboared-lib/umd/v0.3.1/unboared-lib.js"></script>
 </head>
 
+<!-- Instanciate the Tron object -->
+
 <body onload="window.app = new Tron(900, 750)">
-        <h1 style="color:#fff;margin:5px 0 5px 0;padding:0px;">Unboared Demo</h1>
+        <h1 style="margin:15px 0 10px 0;">Unboared Demo</h1>
         <!-- The game will be displayed in this canvas -->
         <canvas id="tron" width="900" height="750"></canvas>
+
+        <!-- Import the logic of the game (the Tron class) -->
         <script src="tron.js"></script>
 </body>
 
